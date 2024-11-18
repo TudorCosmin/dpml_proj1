@@ -1,7 +1,8 @@
-from csp import CSP
+from csp_class import CSP
+from comparison import compare_csp_algorithms
 
 # Variables for the CSP (annotated positions in the grid)
-variables = [f"var{i}" for i in range(1,13)]
+variables = [f"var{i}" for i in range(1,12+1)]
 
 # Domains for each variable
 domains = {
@@ -28,29 +29,29 @@ domains = {
 
 # Horizontal sum constraints
 def horizontal_constraint1(state):
-    return state["var1"] + state["var2"] + state["var3"] == 7
+    return state["var1"] + state["var2"] + state["var3"] == 20
 
 def horizontal_constraint2(state):
-    return state["var4"] + state["var5"] + state["var6"] == 20
+    return state["var4"] + state["var5"] + state["var6"] == 16
 
 def horizontal_constraint3(state):
-    return state["var7"] + state["var8"] + state["var9"] == 9
+    return state["var7"] + state["var8"] + state["var9"] == 19
 
 def horizontal_constraint4(state):
-    return state["var10"] + state["var11"] + state["var12"] == 15
+    return state["var10"] + state["var11"] + state["var12"] == 9
 
 # Vertical sum constraints
 def vertical_constraint1(state):
-    return state["var1"] + state["var4"] == 5
+    return state["var1"] + state["var4"] == 12
 
 def vertical_constraint2(state):
-    return state["var2"] + state["var5"] + state["var7"] + state["var10"] == 13
+    return state["var2"] + state["var5"] + state["var7"] + state["var10"] == 29
 
 def vertical_constraint3(state):
-    return state["var3"] + state["var6"] + state["var8"] + state["var11"] == 25
+    return state["var3"] + state["var6"] + state["var8"] + state["var11"] == 17
 
 def vertical_constraint4(state):
-    return state["var9"] + state["var12"] == 8
+    return state["var9"] + state["var12"] == 6
 
 # Uniqueness constraints for rows
 def uniqueness_constraint_row1(state):
@@ -95,14 +96,28 @@ constraints = [
 ]
 
 
-# Create a CSP instance and solve it
 csp = CSP(variables, domains, constraints)
-solution = csp.backtracking_solution()
+compare_csp_algorithms(csp)
 
-if solution:
-    print("Solution found:")
-    for key, value in solution.items():
-        print(f"{key}: {value}")
-else:
-    print("No solution exists.")
+# solution = csp.chronological_backtracking_solution()
+# solution = csp.backtracking_solution()
+# # solution = csp.hill_climbing_solution()
 
+# if solution:
+#     print("Solution found:", solution)
+# else:
+#     print("No solution exists.")
+
+# print()
+# if csp.arc_consistency():
+#     print("Arc-consistency achieved.")
+#     print("Updated domains:", csp.domains)
+# else:
+#     print("CSP is unsolvable.")
+
+# print()
+# if csp.path_consistency():
+#     print("Path-consistency achieved.")
+#     print("Updated domains:", csp.domains)
+# else:
+#     print("CSP is unsolvable.")
